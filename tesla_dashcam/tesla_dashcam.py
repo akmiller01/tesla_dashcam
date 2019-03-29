@@ -5,7 +5,7 @@ import sys
 from datetime import datetime
 from glob import glob
 from re import search
-from subprocess import CalledProcessError, run
+from subprocess import CalledProcessError, run, PIPE
 
 from tzlocal import get_localzone
 
@@ -118,13 +118,13 @@ def get_metadata(ffmpeg, filenames):
 
     ffmpeg_command.append('-hide_banner')
 
-    command_result = run(ffmpeg_command, capture_output=True, text=True)
+    command_result = run(ffmpeg_command, stdout=PIPE, stderr=PIPE)
 
     input_counter = 0
     file = ''
     metadata = []
     wait_for_input_line = True
-    for line in command_result.stderr.splitlines():
+    for line in command_result.stderr.decode('ascii').splitlines():
         if search("^Input #", line) is not None:
             file = filenames[input_counter]
             input_counter += 1
@@ -448,7 +448,7 @@ def main() -> None:
 
         # Run the command.
         try:
-            run(ffmpeg_command, capture_output=True, check=True)
+            run(ffmpeg_command, stdout=PIPE, stderr=PIPE)
         except CalledProcessError as exc:
             print("Error trying to create clip for {base_name}. RC: {rc}\n"
                   "Command: {command}\n"
@@ -513,7 +513,7 @@ def main() -> None:
     print("Creating movie {}, please be patient.".format(movie_filename))
 
     try:
-        run(ffmpeg_command, capture_output=True, check=True)
+        run(ffmpeg_command, stdout=PIPE, stderr=PIPE)
     except CalledProcessError as exc:
         print("Error trying to create movie {base_name}. RC: {rc}\n"
               "Command: {command}\n"
