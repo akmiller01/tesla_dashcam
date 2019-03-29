@@ -138,7 +138,7 @@ def get_metadata(ffmpeg, filenames):
         if search("^ *creation_time ", line) is not None:
             line_split = line.split(':', 1)
             timestamp = datetime.strptime(line_split[1].strip(),
-                                          "%Y-%m-%dT%H:%M:%S.%f%z")
+                                          "%Y-%m-%dT%H:%M:%S.%fz")
             continue
 
         if search("^ *Duration: ", line) is not None:
