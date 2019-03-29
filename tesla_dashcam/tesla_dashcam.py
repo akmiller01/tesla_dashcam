@@ -182,7 +182,7 @@ def main() -> None:
                         choices=['WIDESCREEN',
                                  'FULLSCREEN',
                                  'PERSPECTIVE', ],
-                        default='PERSPECTIVE',
+                        default='FULLSCREEN',
                         help='R|Layout of the created video.\n'
                              '    PERSPECTIVE: Front camera center top, '
                              'side cameras next to it in perspective.\n'
@@ -198,7 +198,7 @@ def main() -> None:
                                  'LOW',
                                  'MEDIUM',
                                  'HIGH'],
-                        default='LOWER',
+                        default='HIGH',
                         help='Define the quality setting for the video, '
                              'higher quality means bigger file size but '
                              'might not be noticeable.')
