@@ -83,6 +83,7 @@ DEFAULT_FONT = {
     'darwin': '/Library/Fonts/Arial.ttf',
     'win32': 'C\:\\Windows\\Fonts\\arial.ttf',
     'cygwin': 'C\:\\Windows\\Fonts\\arial.ttf',
+    'linux': '/usr/share/fonts/truetype/freefont/FreeSans.ttf',
 }
 
 HALIGN = {
