@@ -485,7 +485,7 @@ def main() -> None:
         movie_filename = args.output
 
     # Make sure it ends in .mp4
-    if os.path.splitext(movie_filename)[1] != 'mp4':
+    if os.path.splitext(movie_filename)[1] != '.mp4':
         movie_filename = movie_filename + '.mp4'
 
     concat_filter_complex = concat_filter_complex + \
