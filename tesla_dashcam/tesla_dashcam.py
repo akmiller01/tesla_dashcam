@@ -198,7 +198,7 @@ def main() -> None:
                                  'LOW',
                                  'MEDIUM',
                                  'HIGH'],
-                        default='HIGH',
+                        default='MEDIUM',
                         help='Define the quality setting for the video, '
                              'higher quality means bigger file size but '
                              'might not be noticeable.')
@@ -214,7 +214,7 @@ def main() -> None:
                                  'slow',
                                  'slower',
                                  'veryslow'],
-                        default='medium',
+                        default='ultrafast',
                         help='Speed to optimize video. Faster speed '
                              'results in a bigger file. This does not impact '
                              'the quality of the video, just how much time '
