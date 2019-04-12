@@ -2,6 +2,7 @@
 import argparse
 import os
 import sys
+import shutil
 from datetime import datetime
 from glob import glob
 from re import search
@@ -399,6 +400,30 @@ def main() -> None:
                 timestamp = item['timestamp'] if item['timestamp'] < \
                                                  timestamp else timestamp
 
+        # 0 byte file protection, write blank files
+        if len(metadata) < 3:
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            logo_path = os.path.join(dir_path, "tesla.jpg")
+            meta_filenames = [item['filename'] for item in metadata]
+            missing_files = list(set([left_camera, front_camera, right_camera])-set(meta_filenames))
+            for missing_file in missing_files:
+                if os.path.isfile(missing_file):
+                    shutil.move(missing_file, missing_file + "_corrupt")
+                ffmpeg_command = [
+                    ffmpeg,
+                    "-loop",
+                    "1",
+                    "-t",
+                    str(duration),
+                    "-i",
+                    logo_path,
+                    "-s",
+                    "640x480",
+                    missing_file
+                ]
+                run(ffmpeg_command, stdout=PIPE, stderr=PIPE)
+
+
         # If we could get a timestamp then retrieve it from the filename
         # instead
         if timestamp is None:
@@ -445,7 +470,6 @@ def main() -> None:
         ] + ffmpeg_params
 
         ffmpeg_command = ffmpeg_command + ['-y', temp_movie_name]
-
         # Run the command.
         try:
             run(ffmpeg_command, stdout=PIPE, stderr=PIPE)
