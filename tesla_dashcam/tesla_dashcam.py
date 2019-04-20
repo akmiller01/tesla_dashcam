@@ -384,8 +384,7 @@ def main() -> None:
         temp_movie_name = base_name + '.mp4'
 
         # Get meta data for each video to determine creation time and duration.
-        metadata = get_metadata(ffmpeg, [left_camera, front_camera,
-                                         right_camera])
+        metadata =get_metadata(ffmpeg, [left_camera]) + get_metadata(ffmpeg, [front_camera]) + get_metadata(ffmpeg, [right_camera])
 
         # Get the longest duration:
         duration = 0
@@ -403,7 +402,7 @@ def main() -> None:
         # 0 byte file protection, write blank files
         if len(metadata) < 3:
             dir_path = os.path.dirname(os.path.realpath(__file__))
-            logo_path = os.path.join(dir_path, "tesla.jpg")
+            logo_path = os.path.join(dir_path, "blank.png")
             meta_filenames = [item['filename'] for item in metadata]
             missing_files = list(set([left_camera, front_camera, right_camera])-set(meta_filenames))
             for missing_file in missing_files:
